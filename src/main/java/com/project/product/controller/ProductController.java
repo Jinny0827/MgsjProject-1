@@ -106,19 +106,18 @@ public class ProductController {
 
 		productService.productWrite(productDTO);
 
-		return "redirect:/product/productList";
+		return "redirect:/category/categoryPro?cno=101";
 
 	}
 
 	// 상품 게시글 수정
 	@RequestMapping(value = "/product/productUpdate", method = RequestMethod.POST)
-	public String productUpdate(ProductDTO productDTO) throws Exception {
+	public void productUpdate(ProductDTO productDTO) throws Exception {
 
 		logger.info("상품 게시글 수정 productUpdate - Controller");
 
 		productService.productUpdate(productDTO);
 
-		return "";
 	}
 
 	// 상품 게시글 삭제

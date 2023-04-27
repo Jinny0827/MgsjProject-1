@@ -25,7 +25,7 @@ public class HomeController {
 	/* DB연동 테스트해보자 */
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
-	@Autowired // bean 자동주입.
+	@Autowired(required = false) // bean 자동주입.
 	BasicDataSource dataSource;
 	
 	@RequestMapping("/testconnectionDB")

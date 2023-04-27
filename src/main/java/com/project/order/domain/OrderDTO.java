@@ -1,6 +1,7 @@
 package com.project.order.domain;
 
 import java.util.Date;
+import java.util.List;
 
 public class OrderDTO {
 
@@ -23,6 +24,10 @@ public class OrderDTO {
 	private String paymentCard;
 	private String paymentKind;
 	private Date paymentRegDate;
+	
+	public OrderDTO() {
+		
+	}
 
 	public int getOrderNum() {
 		return orderNum;
@@ -170,7 +175,6 @@ public class OrderDTO {
 				+ paymentKind + ", paymentRegDate=" + paymentRegDate + "]";
 	}
 
-	
 	
 
 

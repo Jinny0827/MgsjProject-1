@@ -34,7 +34,7 @@
 	<!-- 파일 업로드 -->
 	<!-- 파일 업로드 경로 -->
 	<beans:bean class="java.lang.String" id="uploadPath"> <!-- uploadPath라는 id, class=String은 생성자의 매개변수가 String이라는 의미 -->
-		<beans:constructor-arg value="D:\jsp\workspace\.metadata\.plugins\org.eclipse.wst.server.core\tmp8\wtpwebapps\Mgsjproject\resources"></beans:constructor-arg>
+		<beans:constructor-arg value="C:\Users\user\Documents\MgsjProject-1\src\main\webapp\resources"></beans:constructor-arg>
 	</beans:bean>
 	
 	<!-- 일반 파일 업로드 경로 -->
@@ -57,6 +57,10 @@
 	<context:component-scan base-package="com.project.interceptor"></context:component-scan>
 	<beans:bean id="LoginInterceptor" class="com.project.interceptor.LoginInterceptor"></beans:bean>
 	
+	<!-- 상품판매자 -->
+	<context:component-scan base-package="com.project.interceptor"></context:component-scan>
+	<beans:bean id="SellerInterceptor" class="com.project.interceptor.SellerInterceptor"></beans:bean>
+	
 	<!-- 인터셉터 세부 설정 -->
 	<interceptors>
 		<!-- 로깅 -->
@@ -74,7 +78,6 @@
 		</interceptor>
 		<!-- 로그인 확인 -->
 		<interceptor>
-			<mapping path="/product/**"/>
 			<mapping path="/cart/**"/>
 			<mapping path="/reply/**"/>
 			<mapping path="/inquire/**"/>
@@ -85,6 +88,12 @@
 			<exclude-mapping path="/product/productView*"/>
 			<exclude-mapping path="/category/categoryPro*"/>
 			<beans:ref bean="LoginInterceptor"/>
+		</interceptor>
+		<!-- 상품판매자 -->
+		<interceptor>
+			<mapping path="/product/**"/>
+			<exclude-mapping path="/product/productView*"/>
+			<beans:ref bean="SellerInterceptor"/>
 		</interceptor>
 	</interceptors>
 	

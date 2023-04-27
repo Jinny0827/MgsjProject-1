@@ -4,14 +4,16 @@
 
 <!-- 제품 문의 등록  -->
 <insert id = "inquireWrite" parameterType = "com.project.inquire.domain.InquireDTO">
-INSERT INTO askdto(pno, askTitle, askContent, askRegDate)
-VALUES (#{pno}, #{askTitle}, #{askContent}, NOW())
+INSERT INTO askdto(pno, userId, askTitle, askContent)
+VALUES (#{pno}, #{userId}, #{askTitle}, #{askContent})
 </insert>
 
 <!-- 제품 문의 조회 -->
 <select id = "inquireView" parameterType = "hashMap" resultType = "com.project.inquire.domain.InquireDTO">
-SELECT askNum, pno, askTitle, askContent, askRegDate
-FROM askdto
+SELECT askNum, pno, askTitle, askContent, askRegDate, productName
+FROM askdto as a
+INNER JOIN productdto as p
+ON a.pno = p.pno
 WHERE askNum = #{askNum}
 
 </select>

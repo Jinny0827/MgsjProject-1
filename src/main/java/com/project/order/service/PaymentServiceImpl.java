@@ -1,5 +1,6 @@
 package com.project.order.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -11,6 +12,8 @@ import com.project.order.dao.PaymentDAO;
 import com.project.order.domain.OrderDTO;
 import com.project.order.domain.OrderDetailDTO;
 import com.project.order.domain.PaymentDTO;
+import com.project.product.domain.CartDTO;
+import com.project.product.service.CartService;
 
 @Service
 public class PaymentServiceImpl implements PaymentService {
@@ -20,17 +23,28 @@ public class PaymentServiceImpl implements PaymentService {
 	@Autowired
 	private PaymentDAO paymentDAO;
 	
+	@Autowired
+	private CartService cartService;
+	
+	
 	//결제 등록
 	@Override
 	public void paymentWrite(String userId, 
 							PaymentDTO paymentDTO, 
+							CartDTO cartDTO,
 							OrderDTO orderDTO, 
 							OrderDetailDTO orderDetailDTO)
 			throws Exception {
 			
 		logger.info("결제 등록 paymentWrite - Serivce");
 		
-		paymentDAO.paymentWrite(userId, paymentDTO, orderDTO, orderDetailDTO);
+		List<CartDTO> cart = cartService.cartList(cartDTO);
+		
+		List<OrderDetailDTO> orderDetails = new ArrayList<>();
+		
+		cart.forEach(o -> orderDetails.add(new OrderDetailDTO(orderDTO.getOrderNum(), o.getPno(), o.getProductCnt(), o.getUserId(), orderDTO.getProductPrice())));
+	
+		paymentDAO.paymentWrite(userId, paymentDTO, orderDTO, orderDetails);
 		
 	}
 	

@@ -2,6 +2,7 @@ package com.project.product.dao;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
@@ -104,6 +105,8 @@ public class ProductDAOImpl implements ProductDAO {
 	// 관리자 상품 삭제
 	@Override
 	public void adminProductDelete(int pno) throws Exception {
+		
+		logger.info("관리자 상품 삭제, 삭제된 상품 번호 : {}", pno);
 		
 		sqlSession.delete(NAME_SPACE_ADMIN + ".adminProductDelete", pno);
 	}
