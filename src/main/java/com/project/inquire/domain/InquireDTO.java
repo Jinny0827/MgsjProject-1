@@ -13,6 +13,7 @@ public class InquireDTO {
 
 	// 이너 조인
 	private String categoryName;
+	private String productName;
 
 	public int getAskNum() {
 		return askNum;
@@ -24,6 +25,15 @@ public class InquireDTO {
 
 	public int getPno() {
 		return pno;
+	}
+
+	
+	public String getProductName() {
+		return productName;
+	}
+
+	public void setProductName(String productName) {
+		this.productName = productName;
 	}
 
 	public void setPno(int pno) {
@@ -72,8 +82,11 @@ public class InquireDTO {
 
 	@Override
 	public String toString() {
-		return "InquireDTO [askNum=" + askNum + ", pno=" + pno + ", userId=" + userId + ", askTitle=" + askTitle + ", askContent=" + askContent
-				+ ", askRegDate=" + askRegDate + ", categoryName=" + categoryName + "]";
+		return "InquireDTO [askNum=" + askNum + ", pno=" + pno + ", userId=" + userId + ", askTitle=" + askTitle
+				+ ", askContent=" + askContent + ", askRegDate=" + askRegDate + ", categoryName=" + categoryName
+				+ ", productName=" + productName + "]";
 	}
+
+	
 
 }

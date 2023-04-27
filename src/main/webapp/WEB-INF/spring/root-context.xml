@@ -13,12 +13,20 @@
 
 	<!-- Root Context: defines shared resources visible to all other web components -->
 	<!-- 스프링 DataSource 객체 -->
-	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource">
+ 	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource">
 		<property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy" />
 		<property name="url" value="jdbc:log4jdbc:mysql://mydb-aws.cirhyfkf8ouj.ap-northeast-2.rds.amazonaws.com:3306/firstProject?serverTimezone=Asia/Seoul&amp;useSSL=false&amp;allowPublicKeyRetrieval=true" />
 		<property name="username" value="Auden_root" />
-		<property name="password" value="1q2w3e4r!!" />
-	</bean>
+		<property name="password" value="1q0o2w9i~~!!" />
+	</bean> 
+	
+	<!-- <bean id = "dataSource" class = "org.apache.ibatis.datasource.pooled.PooledDataSource">
+			<property name = "driver"		value = "${jdbc.driverClassName}"></property>
+			<property name = "url" 			value = "${jdbc.url}"></property>
+			<property name = "username" 	value = "${jdbc.username}"></property>		
+			<property name = "password" 	value = "${jdbc.password}"></property>
+			 그냥 파일(jdbc.properties)에 적어놓은 4가지 설정을 가져와서 root컨텍스트에 붙여준다.
+	</bean> -->
 	
 	<!-- mybatis 세션 팩토리 -->
 	<bean id="sqlSessionFactory"

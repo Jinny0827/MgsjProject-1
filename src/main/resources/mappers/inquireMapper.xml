@@ -10,8 +10,10 @@ VALUES (#{pno}, #{userId}, #{askTitle}, #{askContent})
 
 <!-- 제품 문의 조회 -->
 <select id = "inquireView" parameterType = "hashMap" resultType = "com.project.inquire.domain.InquireDTO">
-SELECT askNum, pno, askTitle, askContent, askRegDate
-FROM askdto
+SELECT askNum, pno, askTitle, askContent, askRegDate, productName
+FROM askdto as a
+INNER JOIN productdto as p
+ON a.pno = p.pno
 WHERE askNum = #{askNum}
 
 </select>

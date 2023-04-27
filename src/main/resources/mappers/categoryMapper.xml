@@ -19,8 +19,6 @@
 		WHERE p.cno = #{cno};
 	</select>
 
-	<!-- 카테고리 수정 -->
-
 	<!-- 카테고리 삭제 -->
 	<delete id="categoryDelete" parameterType="int">
 		DELETE FROM categorydto

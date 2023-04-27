@@ -66,11 +66,11 @@ request.setCharacterEncoding("UTF-8");
 
 						<tbody>
 							<c:set var="total" value="0" />
-							<c:forEach var="cartList" items="${cartList}">
+							<c:forEach var="cartList" items="${cartList}" varStatus="index">
 								<tr>
 									<td class="itemview_chk"><input type="checkbox" id="chkbox" name="chkbox" class="test" data-pno="${cartList.pno}"></td>
 									<td class="itemview_thum"><a href="/product.html">
-											<img src="/resources/product/images/product_sample.png">
+											<img src="${cartList.storedFileName}">
 										</a></td>
 									<td class="itemview_info">
 
@@ -99,6 +99,7 @@ request.setCharacterEncoding("UTF-8");
 									</td>
 								</tr>
 								<c:set var="total" value="${total + (cartList.productPrice * cartList.totalCnt)}" />
+								<input type="hidden" name="listSize" value="${index.end}">
 							</c:forEach>
 						</tbody>
 					</table>
@@ -267,7 +268,6 @@ request.setCharacterEncoding("UTF-8");
 										<button type="submit" class="btn_pay">결제하기</button>
 									</a>
 								</div>
-
 							</div>
 						</div>
 					</div>
@@ -285,6 +285,40 @@ request.setCharacterEncoding("UTF-8");
 	<!-- footer -->
 	<!-- 스크립트 -->
 	<script>
+
+		$('#testBtn').on('click', function(){
+			//값들의 갯수 -> 배열 길이를 지정
+			var length = $("input[name=pno]").length;
+			
+			//배열 생성
+			var commaPnoArr = new Array(length);
+			var productTotalPriceArr = new Array(length);
+			var productCntArr = new Array(length);
+			
+			var commaPno = "";
+			var commaProductTotalPrice = "";
+			var commaProductCnt = "";
+			
+			//배열에 값 주입
+			for(var i=0; i<length; i++){                          
+				commaPnoArr[i] = $("input[name=pno]").eq(i).val();
+				productTotalPriceArr[i] = $("input[name=productPrice]").eq(i).val();
+				productCntArr[i] = $("input[name=productCnt]").eq(i).val();
+				
+				if(length-1 == i){
+					commaPno += commaPnoArr[i];
+					commaProductTotalPrice += productTotalPriceArr[i];
+					commaProductCnt += productCntArr[i];
+				}else {
+					commaPno += commaPnoArr[i]+",";
+					commaProductTotalPrice += productTotalPriceArr[i]+",";
+					commaProductCnt += productCntArr[i]+",";
+				}
+		    }
+			
+			//폼제어
+		});
+		
 		 $("#allchk").click(function(){
 				var chk = $("#allchk").prop("checked");
 			

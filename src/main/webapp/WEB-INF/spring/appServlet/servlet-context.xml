@@ -34,7 +34,7 @@
 	<!-- 파일 업로드 -->
 	<!-- 파일 업로드 경로 -->
 	<beans:bean class="java.lang.String" id="uploadPath"> <!-- uploadPath라는 id, class=String은 생성자의 매개변수가 String이라는 의미 -->
-		<beans:constructor-arg value="D:\jsp\workspace\.metadata\.plugins\org.eclipse.wst.server.core\tmp8\wtpwebapps\Mgsjproject\resources"></beans:constructor-arg>
+		<beans:constructor-arg value="C:\Users\user\Documents\MgsjProject-1\src\main\webapp\resources"></beans:constructor-arg>
 	</beans:bean>
 	
 	<!-- 일반 파일 업로드 경로 -->

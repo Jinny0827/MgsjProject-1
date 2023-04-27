@@ -5,11 +5,12 @@ import java.util.List;
 import com.project.order.domain.OrderDTO;
 import com.project.order.domain.OrderDetailDTO;
 import com.project.order.domain.PaymentDTO;
+import com.project.product.domain.CartDTO;
 
 public interface PaymentService {
 
 	//결제 등록
-	public void paymentWrite(String userId, PaymentDTO paymentDTO, OrderDTO orderDTO, OrderDetailDTO orderDetailDTO) throws Exception;
+	public void paymentWrite(String userId, PaymentDTO paymentDTO, CartDTO cartDTO, OrderDTO orderDTO, OrderDetailDTO orderDetailDTO) throws Exception;
 	
 	//결제 내역 목록
 	public List<PaymentDTO> paymentList(PaymentDTO paymentDTO) throws Exception;

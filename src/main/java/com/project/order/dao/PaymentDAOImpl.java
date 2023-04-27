@@ -30,18 +30,29 @@ public class PaymentDAOImpl implements PaymentDAO {
 	
 	//결제 등록
 	@Override
-	public void paymentWrite(String userId, 
+	public boolean paymentWrite(String userId, 
 							PaymentDTO paymentDTO, 
 							OrderDTO orderDTO, 
-							OrderDetailDTO orderDetailDTO)
+							List<OrderDetailDTO> orderDetails)
 							throws Exception {
 		
 		logger.info("결제 등록 paymentWrite - DAO");
 		
-		sqlSession.insert(NAME_SPACE2 + ".orderWrite", orderDTO); //주소정보
-		sqlSession.insert(NAME_SPACE2+ ".orderDetailWrite", orderDetailDTO); // 장바구니목록 주문에 복사
-		sqlSession.insert(NAME_SPACE + ".paymentWrite", paymentDTO); // 결제정보
-		sqlSession.delete(NAME_SPACE3 + ".cartDeleteAll", userId); //카트 삭제
+		int result1 = sqlSession.insert(NAME_SPACE2 + ".orderWrite", orderDTO); // 주소정보
+		
+		for(OrderDetailDTO orderDetail : orderDetails) {
+		
+		int result2 = sqlSession.insert(NAME_SPACE2+ ".orderDetailWrite", orderDetail); // 장바구니목록 주문에 복사
+		
+		}
+		int result3 = sqlSession.insert(NAME_SPACE + ".paymentWrite", paymentDTO); // 결제정보
+		
+		int result4 = sqlSession.delete(NAME_SPACE3 + ".cartDeleteAll", userId); //카트 삭제
+		
+		if(result1 == 1 && result3 == 1) {
+			return true;
+		}
+			return false;
 		
 	}
 	

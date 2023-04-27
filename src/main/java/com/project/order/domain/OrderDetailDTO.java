@@ -14,21 +14,17 @@ public class OrderDetailDTO {
 	private int productPrice;
 
 	public OrderDetailDTO() {
-		
+	
 	}
 	
-	public OrderDetailDTO(int orderDetailNum, int orderNum, int pno, int productTotalPrice, int productCnt,
-			String userId, String productName, int productPrice) {
-		super();
-		this.orderDetailNum = orderDetailNum;
-		this.orderNum = orderNum;
-		this.pno = pno;
-		this.productTotalPrice = productTotalPrice;
-		this.productCnt = productCnt;
-		this.userId = userId;
-		this.productName = productName;
-		this.productPrice = productPrice;
+	public OrderDetailDTO(int orderNum, int productCnt, int productPrice, String userId, int pno) {
+		orderNum = this.orderNum;
+		productCnt = this.productCnt;
+		userId = this.userId;
+		productPrice = this.productPrice;
+		pno = this.pno;
 	}
+	
 
 	public int getOrderDetailNum() {
 		return orderDetailNum;

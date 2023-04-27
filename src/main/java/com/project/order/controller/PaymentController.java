@@ -19,6 +19,7 @@ import com.project.order.domain.OrderDetailDTO;
 import com.project.order.domain.PaymentDTO;
 import com.project.order.service.OrderService;
 import com.project.order.service.PaymentService;
+import com.project.product.domain.CartDTO;
 
 @Controller
 public class PaymentController {
@@ -36,6 +37,7 @@ public class PaymentController {
 	@RequestMapping(value = "/payment/paymentWrite", method = RequestMethod.POST)
 	public String paymentWrite(PaymentDTO paymentDTO, 
 								OrderDTO orderDTO,
+								CartDTO cartDTO,
 								OrderDetailDTO orderDetailDTO,
 								HttpServletRequest req, 
 								String userId) throws Exception {
@@ -48,7 +50,7 @@ public class PaymentController {
 
 		paymentDTO.setUserId(memberLoginSession.getUserId());
 		
-		paymentService.paymentWrite(userId, paymentDTO, orderDTO, orderDetailDTO);
+		paymentService.paymentWrite(userId, paymentDTO, cartDTO, orderDTO, orderDetailDTO);
 		
 		System.out.println("값 넘어왔니?" + orderDetailDTO);
 		

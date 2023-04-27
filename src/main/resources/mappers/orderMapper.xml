@@ -2,6 +2,28 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="mappers.orderMapper">
 
+<!-- 
+orderDTO
+orderNum int AI PK 
+userId varchar(20) 
+orderDate datetime 
+postAddress varchar(20) 
+detailAddress varchar(50) 
+detailAddress2 varchar(50) 
+recipient varchar(10) 
+recipientPhone varchar(15)
+ -->
+ 
+<!-- 
+orderdetailDTO
+orderDetailNum int AI PK 
+orderNum int 
+pno int 
+productTotalPrice int 
+productTotalCnt int 
+userId varchar(20)
+
+ -->
 <!-- 주문 등록 -->
 <insert id = "orderWrite" parameterType = "com.project.order.domain.OrderDTO">
 
@@ -10,18 +32,31 @@ VALUES (#{userId}, NOW(), #{postAddress}, #{detailAddress}, #{detailAddress2}, #
 
 </insert>
 
+<!-- 주문 목록 -->
+<select id = "orderList" parameterType = "HashMap" resultType = "com.project.order.domain.OrderDTO">
 
-<insert id="orderDetailWrite" parameterType="com.project.order.domain.OrderDetailDTO">
+SELECT o.orderNum, o.orderDate, od.pno, od.productPrice, od.userId, p.productName, od.productCnt
+	FROM orderdto as o 
+    INNER JOIN orderdetaildto as od
+	ON o.orderNum = od.orderNum
+    JOIN productdto as p
+	ON od.pno = p.pno
+	WHERE od.userId = #{userId}
+	GROUP BY pno, orderNum, od.productCnt
+	ORDER BY orderNum DESC;
 	
-	INSERT INTO orderdetaildto (orderNum, pno, productPrice, productCnt, userId)
-	VALUES((SELECT max(orderNum) FROM orderdto), #{pno}, #{productPrice}, #{productCnt}, #{userId})
-	
+</select>
 
-	<!-- SELECT max(orderNum), #{pno}, #{productPrice}, #{productCnt}, #{userId}
-		FROM orderdto
-		WHERE userId = #{userId}
-			 -->
-	
+<insert id = "orderDetailWrite" parameterType = "com.project.order.domain.OrderDetailDTO">
+
+<selectKey resultType="int" keyProperty="orderNum" order="BEFORE">
+	SELECT LAST_INSERT_ID()
+</selectKey>
+INSERT INTO orderdetaildto (orderNum, pno, productPrice, productCnt, userId)
+SELECT orderNum, #{pno}, #{productPrice}, #{productCnt}, #{userId}
+FROM orderdto
+WHERE userId = #{userId}
+
 </insert>
 
 <!-- 주문 상세 조회 -->
@@ -59,18 +94,19 @@ WHERE orderNum = #{orderNum}
 </delete>
 
 <!-- 회원 탈퇴를 위한 주문내역 삭제 -->
-<delete id = "removerMemberOrder" parameterType = "String">
+<select id = "removerMemberOrder" parameterType = "String">
 DELETE FROM orderdto
-WHERE userId = #{userId}
-</delete>
-
-<!-- 주문 목록 -->
-<select id = "orderList" parameterType = "HashMap" resultType = "com.project.order.domain.OrderDTO">
-
-SELECT o.orderNum, o.orderDate, od.pno, od.productPrice, od.userId, p.productName, od.productCnt
+WHERE useSELECT o.orderNum, o.orderDate, od.pno, od.productPrice, od.userId, p.productName, SUM(od.productCnt) as totalCnt
 	FROM orderdto as o 
     INNER JOIN orderdetaildto as od
 	ON o.orderNum = od.orderNum
+    JOIN productdto as p
+	ON od.pno = p.pno
+	WHERE od.userId = #{userId}
+    AND o.orderNum = od.orderNum
+	GROUP BY pno, orderNum
+	ORDER BY orderNum DESC;
+	erNum
     JOIN productdto as p
 	ON od.pno = p.pno
 	WHERE od.userId = #{userId}
